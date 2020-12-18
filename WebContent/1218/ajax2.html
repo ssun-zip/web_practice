@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html><head>  <meta charset="UTF-8">
+  <title>ajax 연습2</title>
+  <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script type="text/javascript">
+      function fn_process(){
+       $.ajax({
+         type:"get", //get 방식으로 전송 
+         dataType:"xml", //응답형 데이터 text 형태 
+         async:false,  // 동기식으로 처리 
+         url:"http://localhost:8080/DecemberWeek_3/ajaxTest2", // 전송할 서블릿 지정 
+         data: {param:"Hello,jquery"},  //서버매개변수와 값 지정 
+
+         success:function (info,textStatus){ 
+            $(info).find("book").each(function() {
+            	// ajaxTest2 로부터 정보 받아오기 
+            	var title = $(this).find("title").text();
+            	var writer = $(this).find("writer").text();
+            	var image = $(this).find("image").text();
+            	// 각책의 title writer image 적어주기 
+            	$("#bookInfo").append (
+            		"<p>" + title + "</p>" + 	
+            		"<p>" + writer + "</p>" +
+            		"<img src=>" + image + "/>" 
+            	);
+            	
+            });
+         },
+         error:function(data,textStatus){ //error 발생시 
+            alert("에러가 발생했습니다.");ㅣ
+         },
+         complete:function(data,textStatus){ // 작업이 완료되었을시 
+            //alert("작업을완료 했습니다");
+         }
+      });	
+   }		
+</script></head>
+<body>
+<div id = "bookInfo"></div>
+<input type = button value = "도서정보 요청" onclick = "fn_process()">
+</body></html>

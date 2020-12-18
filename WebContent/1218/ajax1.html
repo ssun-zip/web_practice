@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html><head>  <meta charset="UTF-8">
+  <title>ajax 연습1</title>
+  <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script type="text/javascript">
+      function fn_process(){
+       $.ajax({
+         type:"get", //get 방식으로 전송 
+         dataType:"text", //응답형 데이터 text 형태 
+         async:false,  // 동기식으로 처리 
+         url:"http://localhost:8080/DecemberWeek_3/ajaxTest1", // 전송할 서블릿 지정 
+         data: {param:"Hello,jquery"},  //서버로 매개변수와 값 지정 
+         success:function (data,textStatus){ 
+            $('#message').append(data);
+         // 서버 응답 메세지를 div 엘리먼트 통해 표시 
+         },
+         error:function(data,textStatus){ //error 발생시 
+            alert("에러가 발생했습니다.");ㅣ
+         },
+         complete:function(data,textStatus){ // 작업이 완료되었을시 
+            alert("작업을완료 했습니다");
+         }
+      });	
+   }		
+</script></head>
+<body>
+<input type="button" value="전송하기" onClick="fn_process()" /><br><br>
+<div id="message"></div>
+</body></html>
