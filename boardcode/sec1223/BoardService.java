@@ -1,0 +1,45 @@
+package sec1223;
+
+import java.util.List;
+
+
+public class BoardService {
+	BoardDAO boardDAO;
+	public BoardService() {
+		boardDAO = new BoardDAO();
+	}
+	
+	public List<ArticleVO> listArticles() {
+		List<ArticleVO> articlesList = boardDAO.selectAllArticles();
+		return articlesList;
+	}
+	
+	public int addArticle(ArticleVO article) {
+		System.out.println("here");
+		return boardDAO.insertNewArticle(article);
+	}
+	// 컨트롤러에서 전달받은 글 번호로 다시 selectArticle(articleNO)메소드를 호출 
+	public ArticleVO viewArticle(int articleNO) {
+		ArticleVO article = null;
+		article = boardDAO.selectArticle(articleNO);
+		return article;
+	}
+	
+	public void modArticle(ArticleVO article) {
+		boardDAO.updateArticle(article);
+	}
+
+	public List<Integer> removeArticle(int  articleNO) {
+		List<Integer> articleNOList = boardDAO.selectRemovedArticles(articleNO);
+		boardDAO.deleteArticle(articleNO);
+		return articleNOList;
+	}
+	
+	public int addReply(ArticleVO article) {
+		return boardDAO.insertNewArticle(article);
+	}
+
+}
+// BoardDAO 클래스의 메서드 이름은 보통 각 메서드들이 실행하는 SQL 문에 의해 결정
+// 예를 들면 selectAllArticles() method 는 전체 글 정보를 조회하는 SQL 문을 살행하므로
+// 이름에 selecAll 이 들어갑니다 
